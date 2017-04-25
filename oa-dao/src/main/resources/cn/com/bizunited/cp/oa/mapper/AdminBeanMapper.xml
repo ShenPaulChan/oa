@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.bizunited.cp.oa.mapper.AdminBeanMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.bizunited.cp.oa.domain.base.Admin" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="userpwd" property="userpwd" jdbcType="VARCHAR" />
+    <result column="lastloginip" property="lastloginip" jdbcType="VARCHAR" />
+    <result column="lastlogintime" property="lastlogintime" jdbcType="TIMESTAMP" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="deptid" property="deptid" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="os" property="os" jdbcType="INTEGER" />
+    <result column="accesstoken" property="accesstoken" jdbcType="VARCHAR" />
+    <result column="pushFlag" property="pushflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, userpwd, lastloginip, lastlogintime, createtime, status, deptid, phone, 
+    os, accesstoken, pushFlag
+  </sql>
+  
+  <select id="searchDeptUsers" resultMap="BaseResultMap">
+      select a.* from TB_ADMIN a
+      JOIN tb_admin_role_module arm ON arm.admin_id = a.id
+      JOIN tb_role r ON r.id=arm.role_id
+  	<where>
+  		a.deptid=#{deptId} AND r.rolemark='xsy'
+  		<if test="key != null and key != ''">
+  		 AND (a.username LIKE CONCAT('%',#{key},'%') OR a.phone LIKE CONCAT('%',#{key},'%'))
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="findMemberUser" resultMap="BaseResultMap">
+  	SELECT ta.* FROM tb_admin ta
+	JOIN customer_user cu ON ta.id= cu.USER_ID
+	WHERE cu.CUS_ID=#{memberId}
+  </select>
+  
+  
+  
+    <!-- 拜访任务新增销售员分页 -->
+  <select id="findVisitUserPage" parameterType="cn.com.bizunited.cp.common.web.pagination.Page" resultMap="BaseResultMap">
+      SELECT taa.id,taa.username 
+      	FROM tb_admin taa
+		LEFT JOIN tb_admin_pos_module tapm ON tapm.ADMIN_ID=taa.id
+		LEFT JOIN position p ON p.POSITION_ID=tapm.POS_ID
+		WHERE p.POSITION_ID='2'
+        <if test="advancedQueryCondition.depIdString != null ">
+            AND taa.deptid in 
+            <foreach item="item" index="index" collection="advancedQueryCondition.depIdString"   
+                        open="(" separator="," close=")">  
+                       ${item}
+            </foreach>  
+        </if>
+    </select>
+
+<!-- 以下是远端移植 Start-->
+    <!-- 用户Dto -->
+    <resultMap id="adminDto" type="cn.com.bizunited.cp.oa.domain.AdminDto">
+        <result property="id" column="ID"/>
+        <result property="username" column="USERNAME"/>
+        <result property="userpwd" column="USERPWD"/>
+        <result property="lastloginip" column="LASTLOGINIP"/>
+        <result property="lastlogintime" column="LASTLOGINTIME"/>
+        <result property="createtime" column="CREATETIME"/>
+        <result property="status" column="STATUS"/>
+        <result property="deptid" column="DEPTID"/>
+        <result property="deptname" column="DEPTNAME"/>
+
+        <result property="phone" column="PHONE"/>
+        <result property="os" column="OS"/>
+        <result property="accesstoken" column="ACCESSTOKEN"/>
+        <result property="pushFlag" column="pushFlag"/>
+    </resultMap>
+
+    <sql id="commonSQL">
+        SELECT ID,USERNAME,LASTLOGINIP,LASTLOGINTIME,CREATETIME,USERPWD,STATUS,DEPTID,PHONE,OS,ACCESSTOKEN,pushFlag FROM TB_ADMIN T WHERE 1=1
+    </sql>
+
+    <!--根据用户名获取用户信息 -->
+    <select id="getByUserName" parameterType="java.lang.String" resultMap="adminDto">
+        <include refid="commonSQL"/>
+        AND T.USERNAME = #{username}
+    </select>
+
+    <!-- 根据用户名ID获取拥有的角色的名称 -->
+    <select id="getRoleNames" resultType="java.lang.String">
+
+        SELECT
+			GROUP_CONCAT(role. NAME)
+		FROM
+			TB_ADMIN_ROLE_MODULE arm
+		INNER JOIN TB_ROLE role ON (role.id = arm.role_id)
+		WHERE
+			arm.admin_id = #{userId}
+    </select>
+
+    <!-- 根据用户名ID获取拥有的角色的唯一标识 -->
+    <select id="getRoleCodes" resultType="java.lang.String">
+
+        SELECT
+        GROUP_CONCAT(role.ROLEMARK)
+        FROM
+        TB_ADMIN_ROLE_MODULE arm
+        INNER JOIN TB_ROLE role ON (role.id = arm.role_id)
+        WHERE
+        arm.admin_id = #{userId}
+    </select>
+<!-- 以上是远端移植 End-->
+</mapper>

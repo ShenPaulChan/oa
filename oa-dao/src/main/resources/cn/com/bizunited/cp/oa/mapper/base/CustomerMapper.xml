@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.bizunited.cp.oa.mapper.base.CustomerMapper">
+  <resultMap id="BaseResultMap" type="cn.com.bizunited.cp.oa.domain.base.Customer">
+    <id column="CUSTOMER_ID" jdbcType="BIGINT" property="customerId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="MOBILE2" jdbcType="VARCHAR" property="mobile2" />
+    <result column="QQ" jdbcType="VARCHAR" property="qq" />
+    <result column="QQ_NAME" jdbcType="VARCHAR" property="qqName" />
+    <result column="QQ2" jdbcType="VARCHAR" property="qq2" />
+    <result column="QQ_NAME2" jdbcType="VARCHAR" property="qqName2" />
+    <result column="WX" jdbcType="VARCHAR" property="wx" />
+    <result column="WX_NAME" jdbcType="VARCHAR" property="wxName" />
+    <result column="WX_STATUS" jdbcType="INTEGER" property="wxStatus" />
+    <result column="SEX" jdbcType="INTEGER" property="sex" />
+    <result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+    <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName" />
+    <result column="CITY" jdbcType="VARCHAR" property="city" />
+    <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName" />
+    <result column="QUALITY" jdbcType="INTEGER" property="quality" />
+    <result column="STOCK_AGE" jdbcType="INTEGER" property="stockAge" />
+    <result column="RECENT_EARNING" jdbcType="INTEGER" property="recentEarning" />
+    <result column="RISK" jdbcType="INTEGER" property="risk" />
+    <result column="MONEY" jdbcType="INTEGER" property="money" />
+    <result column="ENERGY" jdbcType="INTEGER" property="energy" />
+    <result column="PROBLEM" jdbcType="INTEGER" property="problem" />
+    <result column="MODEL" jdbcType="INTEGER" property="model" />
+    <result column="ATTITUDE" jdbcType="INTEGER" property="attitude" />
+    <result column="PROFESSION" jdbcType="INTEGER" property="profession" />
+    <result column="INTENTION" jdbcType="INTEGER" property="intention" />
+    <result column="RESOURCE" jdbcType="INTEGER" property="resource" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="GROUP_ID" jdbcType="BIGINT" property="groupId" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CUSTOMER_ID, NAME, TYPE, MOBILE, MOBILE2, QQ, QQ_NAME, QQ2, QQ_NAME2, WX, WX_NAME, 
+    WX_STATUS, SEX, PROVINCE, PROVINCE_NAME, CITY, CITY_NAME, QUALITY, STOCK_AGE, RECENT_EARNING, 
+    RISK, MONEY, ENERGY, PROBLEM, MODEL, ATTITUDE, PROFESSION, INTENTION, RESOURCE, REMARK, 
+    GROUP_ID, GROUP_NAME, USER_ID, CREATE_TIME, CREATE_BY
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_customer
+    where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_customer
+    where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.com.bizunited.cp.oa.domain.base.Customer">
+    <selectKey keyProperty="customerId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_customer (NAME, TYPE, MOBILE, 
+      MOBILE2, QQ, QQ_NAME, 
+      QQ2, QQ_NAME2, WX, WX_NAME, 
+      WX_STATUS, SEX, PROVINCE, 
+      PROVINCE_NAME, CITY, CITY_NAME, 
+      QUALITY, STOCK_AGE, RECENT_EARNING, 
+      RISK, MONEY, ENERGY, 
+      PROBLEM, MODEL, ATTITUDE, 
+      PROFESSION, INTENTION, RESOURCE, 
+      REMARK, GROUP_ID, GROUP_NAME, 
+      USER_ID, CREATE_TIME, CREATE_BY
+      )
+    values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
+      #{mobile2,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{qqName,jdbcType=VARCHAR}, 
+      #{qq2,jdbcType=VARCHAR}, #{qqName2,jdbcType=VARCHAR}, #{wx,jdbcType=VARCHAR}, #{wxName,jdbcType=VARCHAR}, 
+      #{wxStatus,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR}, 
+      #{provinceName,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{quality,jdbcType=INTEGER}, #{stockAge,jdbcType=INTEGER}, #{recentEarning,jdbcType=INTEGER}, 
+      #{risk,jdbcType=INTEGER}, #{money,jdbcType=INTEGER}, #{energy,jdbcType=INTEGER}, 
+      #{problem,jdbcType=INTEGER}, #{model,jdbcType=INTEGER}, #{attitude,jdbcType=INTEGER}, 
+      #{profession,jdbcType=INTEGER}, #{intention,jdbcType=INTEGER}, #{resource,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{groupId,jdbcType=BIGINT}, #{groupName,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.bizunited.cp.oa.domain.base.Customer">
+    <selectKey keyProperty="customerId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="mobile2 != null">
+        MOBILE2,
+      </if>
+      <if test="qq != null">
+        QQ,
+      </if>
+      <if test="qqName != null">
+        QQ_NAME,
+      </if>
+      <if test="qq2 != null">
+        QQ2,
+      </if>
+      <if test="qqName2 != null">
+        QQ_NAME2,
+      </if>
+      <if test="wx != null">
+        WX,
+      </if>
+      <if test="wxName != null">
+        WX_NAME,
+      </if>
+      <if test="wxStatus != null">
+        WX_STATUS,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="province != null">
+        PROVINCE,
+      </if>
+      <if test="provinceName != null">
+        PROVINCE_NAME,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="cityName != null">
+        CITY_NAME,
+      </if>
+      <if test="quality != null">
+        QUALITY,
+      </if>
+      <if test="stockAge != null">
+        STOCK_AGE,
+      </if>
+      <if test="recentEarning != null">
+        RECENT_EARNING,
+      </if>
+      <if test="risk != null">
+        RISK,
+      </if>
+      <if test="money != null">
+        MONEY,
+      </if>
+      <if test="energy != null">
+        ENERGY,
+      </if>
+      <if test="problem != null">
+        PROBLEM,
+      </if>
+      <if test="model != null">
+        MODEL,
+      </if>
+      <if test="attitude != null">
+        ATTITUDE,
+      </if>
+      <if test="profession != null">
+        PROFESSION,
+      </if>
+      <if test="intention != null">
+        INTENTION,
+      </if>
+      <if test="resource != null">
+        RESOURCE,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="groupId != null">
+        GROUP_ID,
+      </if>
+      <if test="groupName != null">
+        GROUP_NAME,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile2 != null">
+        #{mobile2,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="qqName != null">
+        #{qqName,jdbcType=VARCHAR},
+      </if>
+      <if test="qq2 != null">
+        #{qq2,jdbcType=VARCHAR},
+      </if>
+      <if test="qqName2 != null">
+        #{qqName2,jdbcType=VARCHAR},
+      </if>
+      <if test="wx != null">
+        #{wx,jdbcType=VARCHAR},
+      </if>
+      <if test="wxName != null">
+        #{wxName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxStatus != null">
+        #{wxStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null">
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="quality != null">
+        #{quality,jdbcType=INTEGER},
+      </if>
+      <if test="stockAge != null">
+        #{stockAge,jdbcType=INTEGER},
+      </if>
+      <if test="recentEarning != null">
+        #{recentEarning,jdbcType=INTEGER},
+      </if>
+      <if test="risk != null">
+        #{risk,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=INTEGER},
+      </if>
+      <if test="energy != null">
+        #{energy,jdbcType=INTEGER},
+      </if>
+      <if test="problem != null">
+        #{problem,jdbcType=INTEGER},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=INTEGER},
+      </if>
+      <if test="attitude != null">
+        #{attitude,jdbcType=INTEGER},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=INTEGER},
+      </if>
+      <if test="intention != null">
+        #{intention,jdbcType=INTEGER},
+      </if>
+      <if test="resource != null">
+        #{resource,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.bizunited.cp.oa.domain.base.Customer">
+    update tb_customer
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile2 != null">
+        MOBILE2 = #{mobile2,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="qqName != null">
+        QQ_NAME = #{qqName,jdbcType=VARCHAR},
+      </if>
+      <if test="qq2 != null">
+        QQ2 = #{qq2,jdbcType=VARCHAR},
+      </if>
+      <if test="qqName2 != null">
+        QQ_NAME2 = #{qqName2,jdbcType=VARCHAR},
+      </if>
+      <if test="wx != null">
+        WX = #{wx,jdbcType=VARCHAR},
+      </if>
+      <if test="wxName != null">
+        WX_NAME = #{wxName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxStatus != null">
+        WX_STATUS = #{wxStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null">
+        PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="quality != null">
+        QUALITY = #{quality,jdbcType=INTEGER},
+      </if>
+      <if test="stockAge != null">
+        STOCK_AGE = #{stockAge,jdbcType=INTEGER},
+      </if>
+      <if test="recentEarning != null">
+        RECENT_EARNING = #{recentEarning,jdbcType=INTEGER},
+      </if>
+      <if test="risk != null">
+        RISK = #{risk,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        MONEY = #{money,jdbcType=INTEGER},
+      </if>
+      <if test="energy != null">
+        ENERGY = #{energy,jdbcType=INTEGER},
+      </if>
+      <if test="problem != null">
+        PROBLEM = #{problem,jdbcType=INTEGER},
+      </if>
+      <if test="model != null">
+        MODEL = #{model,jdbcType=INTEGER},
+      </if>
+      <if test="attitude != null">
+        ATTITUDE = #{attitude,jdbcType=INTEGER},
+      </if>
+      <if test="profession != null">
+        PROFESSION = #{profession,jdbcType=INTEGER},
+      </if>
+      <if test="intention != null">
+        INTENTION = #{intention,jdbcType=INTEGER},
+      </if>
+      <if test="resource != null">
+        RESOURCE = #{resource,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        GROUP_ID = #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="groupName != null">
+        GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.bizunited.cp.oa.domain.base.Customer">
+    update tb_customer
+    set NAME = #{name,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=INTEGER},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      MOBILE2 = #{mobile2,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      QQ_NAME = #{qqName,jdbcType=VARCHAR},
+      QQ2 = #{qq2,jdbcType=VARCHAR},
+      QQ_NAME2 = #{qqName2,jdbcType=VARCHAR},
+      WX = #{wx,jdbcType=VARCHAR},
+      WX_NAME = #{wxName,jdbcType=VARCHAR},
+      WX_STATUS = #{wxStatus,jdbcType=INTEGER},
+      SEX = #{sex,jdbcType=INTEGER},
+      PROVINCE = #{province,jdbcType=VARCHAR},
+      PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      CITY_NAME = #{cityName,jdbcType=VARCHAR},
+      QUALITY = #{quality,jdbcType=INTEGER},
+      STOCK_AGE = #{stockAge,jdbcType=INTEGER},
+      RECENT_EARNING = #{recentEarning,jdbcType=INTEGER},
+      RISK = #{risk,jdbcType=INTEGER},
+      MONEY = #{money,jdbcType=INTEGER},
+      ENERGY = #{energy,jdbcType=INTEGER},
+      PROBLEM = #{problem,jdbcType=INTEGER},
+      MODEL = #{model,jdbcType=INTEGER},
+      ATTITUDE = #{attitude,jdbcType=INTEGER},
+      PROFESSION = #{profession,jdbcType=INTEGER},
+      INTENTION = #{intention,jdbcType=INTEGER},
+      RESOURCE = #{resource,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      GROUP_ID = #{groupId,jdbcType=BIGINT},
+      GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR}
+    where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+  </update>
+</mapper>

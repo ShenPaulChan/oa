@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--119.23.17.31-->
+<app-menus-config appName="main" appUrl="http://119.23.17.31:8081/centermain" isEnabledPermission = "true">
+	<!-- 菜单  -->
+	<app-menus>
+		<menus id="1" order="1" pId="0" name="组织权限" >
+			<menusArray>
+				<menus id="11" order="1" pId="1" name="管理员" url="../admin/manager/userManagerList.jhtml" permission="admin:admin" />
+				<menus id="12" order="2" pId="1" name="角色管理" url="../admin/role/roleManagerList.jhtml" permission="admin:roles" />
+				<menus id="13" order="3" pId="1" name="组织架构" url="../admin/dept/goOrgDept.jhtml" permission="admin:orgdept" />
+				<menus id="14" order="4" pId="1" name="菜单加载" url="../admin/menus/reload.jhtml" permission="admin:menusreload" />
+			</menusArray>
+		</menus>
+	</app-menus>
+	<!-- 对应菜单中 页面的权限 -->
+	<app-permissions>
+		<permissions pId="11">
+			<permission id="111" name="新增" order="1" permission="addUser" />
+			<permission id="112" name="修改" order="2" permission="updateUser" />
+			<permission id="113" name="删除" order="3" permission="deleteUser" />
+			<permission id="114" name="查询" order="4" permission="query" />
+			<permission id="115" name="禁启" order="5" permission="forbiddenRev" />
+			<!-- <permission id="116" name="重置密码" order="6" permission="resetPwd" /> -->
+		</permissions>
+		<permissions pId="12">
+			<permission id="121" name="新增" order="1" permission="addroles" />
+			<permission id="122" name="修改" order="2" permission="updateroles" />
+			<permission id="123" name="删除" order="3" permission="deleteroles" />
+			<permission id="124" name="查询" order="4" permission="query" />
+		</permissions>
+
+		<permissions pId="13">
+			<permission id="151" name="查询" order="1" permission="query" />
+		</permissions>
+		<permissions pId="14">
+			<permission id="191" name="查询" order="1" permission="query" />
+		</permissions>
+	</app-permissions>
+</app-menus-config>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+	default-lazy-init="true">
+	
+	<bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+		<property name="redirectUrl" value="${casserver.url}/logout?service=${shiro.url}" />
+	</bean>
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="${casserver.url}/login?service=${shiro.url}/mainFrame" />
+		<property name="successUrl" value="/admin/common/main.jhtml" />
+		<property name="unauthorizedUrl" value="/admin/common/unauthorized.jhtml" />
+		<property name="filterChainDefinitions">
+			<value>
+				/mainFrame= casFilter
+				/admin/login.jsp = authc
+				/admin/logout.jsp =logout
+				/logout = logout
+				/admin/** =authc
+				/oa/** =authc
+				/** = anon
+			</value>
+		</property>
+		<property name="filters">
+			<map>
+				<!-- 添加casFilter到shiroFilter -->
+				<entry key="casFilter" value-ref="casFilter" />
+				<!-- <entry key="authc" value-ref="authenticationFilter" /> -->
+				<entry key="logout" value-ref="logoutFilter" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="casFilter" class="cn.com.bizunited.cp.common.web.shiro.CpCasFilter">
+		<property name="failureUrl" value="/admin/common/unauthorized.jhtml"/>
+ 		<!--<property name="defaultSuccessUrl" value="admin/common/main.jhtml"/>-->
+	</bean>
+
+	<bean id="authenticationRealm" class="cn.com.bizunited.cp.common.web.shiro.AuthenticationRealmCenter">
+		<property name="defaultRoles" value="ROLE_USER"/>	
+		<property name="casServerUrlPrefix" value="${casserver.url}"/>
+		<property name="casService" value="${shiro.url}/mainFrame"/>
+		<property name="authorizationCacheName" value="authorizationCache" />
+		<property name="permissionResolver" ref="myWildcardPermissionResolver"/>
+	</bean>
+	
+
+     <!-- 用户授权信息Cache, 采用EhCache，本地缓存最长时间应比中央缓存时间短一些，以确保Session中doReadSession方法调用时更新中央缓存过期时间 -->
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+   		<property name="cacheManager" ref="casEhCacheManagerFactory" />
+    </bean>
+    
+	
+	 <!-- Spring提供的基于的Ehcache实现的缓存管理器 -->  
+    <bean id="casEhCacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">  
+        <property name="configLocation" value="classpath:config/casEhcache-shiro.xml"/>  
+    </bean>
+	
+</beans>

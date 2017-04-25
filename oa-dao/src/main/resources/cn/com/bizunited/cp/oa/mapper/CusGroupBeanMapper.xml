@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.bizunited.cp.oa.mapper.CusGroupBeanMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.bizunited.cp.oa.domain.base.CusGroup" >
+    <id column="CUS_GROUP_ID" jdbcType="BIGINT" property="cusGroupId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CUS_GROUP_ID, NAME, CREATE_TIME, CREATE_BY, USER_ID
+  </sql>
+  <select id="findUserCusGroups" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM tb_cus_group
+    <where>
+      USER_ID=#{userId}
+    </where>
+  </select>
+</mapper>

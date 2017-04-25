@@ -1,0 +1,29 @@
+deshan-app/target/
+deshan-commons/target/
+deshan-interface/target/
+deshan-web/target/
+/.project
+
+.idea/
+
+ipse
+.classpath
+.project
+.settings/
+
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+overlays/
+deshan-web/.gitignore
+deshan-app/src/main/java/META-INF/MANIFEST.MF
+

@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.com.bizunited.cp.oa</groupId>
+		<artifactId>oa</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>oa-dao</artifactId>
+	<name>oa-dao</name>
+	
+	<dependencies>
+		<dependency>
+			<groupId>cn.com.bizunited.cp.oa</groupId>
+			<artifactId>oa-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+	</dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+	<repositories>
+		<repository>
+			<id>internal.centre</id>
+			<name>Internal Maven Repository</name>
+			<url>http://dev.biz-united.com.cn:18080/artifactory/repo</url>
+		</repository>
+	</repositories>
+</project>

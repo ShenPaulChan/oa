@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.bizunited.cp.oa.mapper.CustomerBeanMapper">
+  <resultMap id="BaseResultMap" type="cn.com.bizunited.cp.oa.domain.base.Customer">
+    <id column="CUSTOMER_ID" jdbcType="BIGINT" property="customerId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="MOBILE2" jdbcType="VARCHAR" property="mobile2" />
+    <result column="QQ" jdbcType="VARCHAR" property="qq" />
+    <result column="QQ_NAME" jdbcType="VARCHAR" property="qqName" />
+    <result column="QQ2" jdbcType="VARCHAR" property="qq2" />
+    <result column="QQ_NAME2" jdbcType="VARCHAR" property="qqName2" />
+    <result column="WX" jdbcType="VARCHAR" property="wx" />
+    <result column="WX_NAME" jdbcType="VARCHAR" property="wxName" />
+    <result column="WX_STATUS" jdbcType="INTEGER" property="wxStatus" />
+    <result column="SEX" jdbcType="INTEGER" property="sex" />
+    <result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+    <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName" />
+    <result column="CITY" jdbcType="VARCHAR" property="city" />
+    <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName" />
+    <result column="QUALITY" jdbcType="INTEGER" property="quality" />
+    <result column="STOCK_AGE" jdbcType="INTEGER" property="stockAge" />
+    <result column="RECENT_EARNING" jdbcType="INTEGER" property="recentEarning" />
+    <result column="RISK" jdbcType="INTEGER" property="risk" />
+    <result column="MONEY" jdbcType="INTEGER" property="money" />
+    <result column="ENERGY" jdbcType="INTEGER" property="energy" />
+    <result column="PROBLEM" jdbcType="INTEGER" property="problem" />
+    <result column="MODEL" jdbcType="INTEGER" property="model" />
+    <result column="ATTITUDE" jdbcType="INTEGER" property="attitude" />
+    <result column="PROFESSION" jdbcType="INTEGER" property="profession" />
+    <result column="INTENTION" jdbcType="INTEGER" property="intention" />
+    <result column="RESOURCE" jdbcType="INTEGER" property="resource" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="GROUP_ID" jdbcType="BIGINT" property="groupId" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CUSTOMER_ID, NAME, TYPE, MOBILE, MOBILE2, QQ, QQ_NAME, QQ2, QQ_NAME2, WX, WX_NAME, 
+    WX_STATUS, SEX, PROVINCE, PROVINCE_NAME, CITY, CITY_NAME, QUALITY, STOCK_AGE, RECENT_EARNING,
+    RISK, MONEY, ENERGY, PROBLEM, MODEL, ATTITUDE, PROFESSION, INTENTION, RESOURCE, REMARK,
+    GROUP_ID, GROUP_NAME, USER_ID, CREATE_TIME, CREATE_BY
+  </sql>
+
+  <select id="findPage" resultMap="BaseResultMap" parameterType="cn.com.bizunited.cp.common.web.pagination.Page">
+    SELECT <include refid="Base_Column_List" />
+    FROM tb_customer
+    <where>
+        USER_ID = #{advancedQueryCondition.userId}
+        <if test="searchCondition.value != null and searchCondition.value != ''">
+          AND NAME LIKE CONCAT('%',#{searchCondition.value},'%')
+        </if>
+    </where>
+    <choose>
+      <when test="sortCondition.columnName != '' and sortCondition.columnName != null">
+        ORDER BY ${sortCondition.columnName}  ${sortCondition.dir}
+      </when>
+      <otherwise>
+        ORDER BY CREATE_TIME DESC
+      </otherwise>
+    </choose>
+  </select>
+
+</mapper>

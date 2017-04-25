@@ -1,0 +1,15 @@
+/*下拉框属性*/
+.select-source {
+	width: 150px;
+	height: 32px;
+}
+
+/*字体大小*/
+.get-bill-font {
+	font-size: 12px;
+}
+
+/*表格字体大小*/
+.table_01 {
+	text-align: center;
+}
