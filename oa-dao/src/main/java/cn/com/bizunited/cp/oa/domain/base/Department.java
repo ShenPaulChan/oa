@@ -9,21 +9,11 @@ public class Department {
 
     private String depName;
 
-    private String depCurator;
-
-    private String depPhone;
-
-    private String depAddress;
-
     private Integer depStatus;
 
     private Date createTime;
 
     private Integer lelve;
-
-    private Integer isLifeHouse;
-
-    private Integer erpFlag;
 
     private String parentNo;
 
@@ -53,30 +43,6 @@ public class Department {
         this.depName = depName == null ? null : depName.trim();
     }
 
-    public String getDepCurator() {
-        return depCurator;
-    }
-
-    public void setDepCurator(String depCurator) {
-        this.depCurator = depCurator == null ? null : depCurator.trim();
-    }
-
-    public String getDepPhone() {
-        return depPhone;
-    }
-
-    public void setDepPhone(String depPhone) {
-        this.depPhone = depPhone == null ? null : depPhone.trim();
-    }
-
-    public String getDepAddress() {
-        return depAddress;
-    }
-
-    public void setDepAddress(String depAddress) {
-        this.depAddress = depAddress == null ? null : depAddress.trim();
-    }
-
     public Integer getDepStatus() {
         return depStatus;
     }
@@ -99,22 +65,6 @@ public class Department {
 
     public void setLelve(Integer lelve) {
         this.lelve = lelve;
-    }
-
-    public Integer getIsLifeHouse() {
-        return isLifeHouse;
-    }
-
-    public void setIsLifeHouse(Integer isLifeHouse) {
-        this.isLifeHouse = isLifeHouse;
-    }
-
-    public Integer getErpFlag() {
-        return erpFlag;
-    }
-
-    public void setErpFlag(Integer erpFlag) {
-        this.erpFlag = erpFlag;
     }
 
     public String getParentNo() {

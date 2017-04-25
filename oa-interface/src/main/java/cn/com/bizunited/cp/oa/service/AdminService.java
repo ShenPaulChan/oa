@@ -70,6 +70,8 @@ public interface AdminService extends BaseService<Admin> {
 	 * @return
 	 */
 	public String getRoleCodes(Integer userId);
-	
+
+    Page<Admin> getUserColleaguePage(Pageable pageable);
+
 /******************************************************以上是远端移植的方法**********************************************************************/
 }

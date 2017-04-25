@@ -16,4 +16,5 @@ public interface CusGroupService extends BaseService<CusGroup> {
     List<CusGroup> listUserCusGroups(Integer userId);
 
     CusGroup addCusGroup(String groupName, Admin admin);
+
 }

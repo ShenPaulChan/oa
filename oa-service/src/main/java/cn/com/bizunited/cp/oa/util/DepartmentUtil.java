@@ -52,7 +52,6 @@ public class DepartmentUtil {
 				logger.info(dept.getTreePath());
 				//保存treePath
 				treePathMap.put(dept.getDepNo(), dept.getTreePath());
-				dept.setIsLifeHouse((Integer)map.get("isShow"));
 				dept.setLelve((Integer)map.get("level"));
 				deptDtos.add(dept);
 				JSONArray iitems = (JSONArray)map.get("childrens");

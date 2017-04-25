@@ -98,4 +98,16 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer> implements Cu
             updateEntityKeySelective(customer);
         }
     }
+
+    @Override
+    @Transactional
+    public void transfer(Admin admin, List<Long> cusIds) {
+        for (Long cusId : cusIds) {
+            Customer customer = selectEntityById(cusId);
+            if(customer != null){
+                customer.setUserId(admin.getId());
+                updateEntityKeySelective(customer);
+            }
+        }
+    }
 }

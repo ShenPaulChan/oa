@@ -43,4 +43,6 @@ public class CusGroupServiceImpl extends BaseServiceImpl<CusGroup> implements Cu
         insertEntity(group);
         return group;
     }
+
+
 }

@@ -19,6 +19,8 @@ public class Track {
 
     private String content;
 
+    private Integer userId;
+
     private Date createTime;
 
     private String createBy;
@@ -85,6 +87,14 @@ public class Track {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Date getCreateTime() {

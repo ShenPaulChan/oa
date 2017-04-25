@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--119.23.17.31-->
-<app-menus-config appName="main" appUrl="http://119.23.17.31:8081/centermain" isEnabledPermission = "true">
+<app-menus-config appName="main" appUrl="http://119.23.17.31/centermain" isEnabledPermission = "true">
 	<!-- 菜单  -->
 	<app-menus>
 		<menus id="1" order="1" pId="0" name="组织权限" >

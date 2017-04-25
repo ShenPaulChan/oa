@@ -73,6 +73,14 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin> implements AdminSer
 		return page;
 	}
 
+	@Override
+	public Page<Admin> getUserColleaguePage(Pageable pageable) {
+		Page<Admin> page = new Page<>(pageable);
+		List<Admin> admins = adminBeanMapper.getUserColleaguePage(page);
+		page.setRows(admins);
+		return page;
+	}
+
 
 /******************************************************以下是远端移植的方法**********************************************************************/
 	@Override

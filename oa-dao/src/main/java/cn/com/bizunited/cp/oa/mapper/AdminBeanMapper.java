@@ -57,4 +57,5 @@ public interface AdminBeanMapper {
 	 */
 	public String getRoleCodes(Integer userId);
 
+    List<Admin> getUserColleaguePage(Page<Admin> page);
 }

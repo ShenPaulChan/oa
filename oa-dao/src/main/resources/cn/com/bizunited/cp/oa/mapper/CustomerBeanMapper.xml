@@ -46,12 +46,30 @@
   </sql>
 
   <select id="findPage" resultMap="BaseResultMap" parameterType="cn.com.bizunited.cp.common.web.pagination.Page">
-    SELECT <include refid="Base_Column_List" />
-    FROM tb_customer
+    SELECT tc.* FROM tb_customer tc
+    JOIN tb_admin ta ON tc.USER_ID=ta.id
     <where>
-        USER_ID = #{advancedQueryCondition.userId}
+        <choose>
+          <when test="advancedQueryCondition.listType==1">
+            tc.USER_ID = #{advancedQueryCondition.userId}
+          </when>
+          <otherwise>
+            ta.deptid IN
+            <foreach collection="advancedQueryCondition.depts" open="(" item="dept" separator="," close=")">
+              ${dept.depId}
+            </foreach>
+          </otherwise>
+        </choose>
         <if test="searchCondition.value != null and searchCondition.value != ''">
-          AND NAME LIKE CONCAT('%',#{searchCondition.value},'%')
+          AND (tc.NAME LIKE CONCAT('%',#{searchCondition.value},'%')
+              OR tc.QQ LIKE CONCAT('%',#{searchCondition.value},'%')
+              OR tc.MOBILE LIKE CONCAT('%',#{searchCondition.value},'%'))
+        </if>
+        <if test="advancedQueryCondition.type != null and advancedQueryCondition.type != ''">
+          AND tc.TYPE = #{advancedQueryCondition.type}
+        </if>
+        <if test="advancedQueryCondition.groupId != null and advancedQueryCondition.groupId != ''">
+          AND tc.GROUP_ID = #{advancedQueryCondition.groupId}
         </if>
     </where>
     <choose>
@@ -59,7 +77,7 @@
         ORDER BY ${sortCondition.columnName}  ${sortCondition.dir}
       </when>
       <otherwise>
-        ORDER BY CREATE_TIME DESC
+        ORDER BY tc.CREATE_TIME DESC
       </otherwise>
     </choose>
   </select>

@@ -34,10 +34,10 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="oa" tableName="tb_cus_group" domainObjectName="CusGroup"
+        <table schema="oa" tableName="tb_track" domainObjectName="Track"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
-            <generatedKey column="CUS_GROUP_ID" sqlStatement="MySql" type="post" identity="true"/>
+            <generatedKey column="TRACK_ID" sqlStatement="MySql" type="post" identity="true"/>
         </table>
     </context>
 </generatorConfiguration>

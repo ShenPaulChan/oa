@@ -26,3 +26,6 @@ customer_service.save_cus_group = function(params, callback){
 customer_service.del_group = function(cusGroupId, callback){
     request_util.post(base+'/oa/customer/groups/delete', {cusGroupId:cusGroupId}, callback);
 }
+customer_service.transfer_cus = function(params, callback){
+    request_util.post(base+'/oa/customer/transfer', params, callback);
+}

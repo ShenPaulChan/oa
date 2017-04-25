@@ -43,6 +43,25 @@ $(function(){
         });
         $('#modal-add-cus-group').modal('show');
     })
+    $('#btn-show-transfer-cus').on('click', function(){
+        var cusInputs = $('.checkbox-customer:checked');
+        if(cusInputs.length == 0){
+            dialog.alert('请选择客户');
+            return;
+        }
+        $('#modal-transfer-cus').modal({
+            keyboard: false,
+            backdrop:false
+        });
+        $('#modal-transfer-cus').modal('show');
+        setTimeout(function(){
+            if(customer_list.transfer_cus_page == null){
+                customer_list.transfer_cus_page = $('#table-transfer-cus').page(Util.transfer_cus_tableSetting());
+            }else{
+                customer_list.transfer_cus_page.ajax.reload();
+            }
+        }, 500);
+    })
     $('#btn-add-group').on('click', function(){
         var groupName = $('#form-add-group').find('input[name=groupName]').val();
         if(groupName == null && groupName.trim() == ''){
@@ -64,11 +83,40 @@ $(function(){
     $('#btn-save-cus-group').on('click', function(){
         customer_list.save_cus_group();
     })
+    $('select[name=cus-source]').on('change', function(){
+        customer_list.page.ajax.reload();
+    })
     customer_list.init_validate();
 });
 
 customer_list.list_track = function(customerId){
     location.href = base + '/oa/track/list/view?customerId='+customerId;
+}
+
+customer_list.get_checked_cusIds = function(){
+    var cusIds = [];
+    var cusInputs = $('.checkbox-customer:checked');
+    $.each(cusInputs, function(index, input){
+        cusIds.push($(input).attr('data'));
+    });
+    return cusIds;
+}
+
+customer_list.transfer_cus = function(userId){
+    var params = {userId : userId};
+    params.cusIds = customer_list.get_checked_cusIds();
+    dialog.confirm('转让', function () {
+        customer_service.transfer_cus(params, function(json){
+            if(json.code == 1000){
+                dialog.alert('转让成功', function(){
+                    $('#modal-transfer-cus').modal('hide');
+                    customer_list.page.ajax.reload();
+                })
+            }else{
+                dialog.alert(json.message);
+            }
+        });
+    },'确认要转让给该员工吗？');
 }
 
 customer_list.save_cus_group = function(){
@@ -274,7 +322,8 @@ var Util = {
                 "url": base + "/oa/customer/page",
                 type:"post",
                 "data": function (data) {
-
+                    data.listType = $('select[name=cus-source]').val()
+                    return data;
                 }
             },
             "columns": [
@@ -306,6 +355,38 @@ var Util = {
                     html += '<button type="button" onclick="customer_list.editCus('+data+')" class="btn btn-primary btn-edit-cus">修改信息</button>';
                     html += '<button type="button" onclick="customer_list.cusGroup('+data+')" class="btn btn-primary btn-edit-cus-group">自选</button>';
                     html += '<button type="button" onclick="customer_list.list_track('+data+')" class="btn btn-primary btn-edit-cus-group">跟踪信息</button>';
+                    return html;
+                }},
+            ]
+        };
+        return setting;
+    },
+    transfer_cus_tableSetting: function () {
+        var setting = {
+            scrollX: true,
+            colReorder: false,
+            processing: true, //打开数据加载时的等待效果
+            serverSide: true,//打开后台分页
+            ordering: true,
+            searching:true,
+            search:true,
+            isAdvancedSearch:false,
+            baseUrl : '${base}',
+            ajax: {
+                "url": base + "/oa/admin/user/colleague/page",
+                type:"post",
+                "data": function (data) {
+                }
+            },
+            "columns": [
+                {data: "id",orderable:false, title:'序号', render:function(data, type, row, meta){
+                    console.info(meta);
+                    return meta.row+1;
+                }},
+                {data: "username",orderable:false, title:'员工'},
+                {data: "id",orderable:false, title:'操作', render:function(data, type, row, meta){
+                    var html = '';
+                    html += '<button type="button" onclick="customer_list.transfer_cus('+data+')" class="btn btn-primary btn-transfer-cus">转让</button>';
                     return html;
                 }},
             ]

@@ -108,5 +108,16 @@
         WHERE
         arm.admin_id = #{userId}
     </select>
-<!-- 以上是远端移植 End-->
+    <!-- 以上是远端移植 End-->
+    <select id="getUserColleaguePage" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM tb_admin
+        <where>
+            deptid IN
+            <foreach collection="advancedQueryCondition.depts" open="(" separator="," close=")" item="dept">
+                ${dept.depId}
+            </foreach>
+            AND id != #{advancedQueryCondition.userId}
+        </where>
+    </select>
 </mapper>

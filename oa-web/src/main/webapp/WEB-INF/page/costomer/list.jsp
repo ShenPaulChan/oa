@@ -44,13 +44,16 @@
             <div class="box">
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="padding-bottom: 10px;">
                             <div class="form-group add-inputSelect-style col-md-1">
                                 <select name="cus-source" class="form-control">
                                     <option value="1">本人</option>
                                     <option value="2">团组</option>
                                 </select>
                             </div>
+                            <button type="button" id="btn-show-transfer-cus" style="float: right" class="btn btn-primary">
+                                转让
+                            </button>
                             <button type="button" id="btn-show-add-cus" style="float: right" class="btn btn-primary">
                                 录入客户
                             </button>
@@ -71,10 +74,6 @@
                                 <option value="7">成交客户</option>
                                 <option value="8">黑名单（同行）</option>
                             </select>
-                        </div>
-                        <div class="form-group add-inputSelect-style">
-                            <label  class="control-sidebar-subheading">客户姓名</label>
-                            <input  class="form-control" id="query_cusName" name="name" placeholder=""/>
                         </div>
                         <div class="form-group add-inputSelect-style">
                             <label  class="control-sidebar-subheading">自选分类</label>
@@ -560,6 +559,38 @@
                 </button>
                 <button type="button" id="btn-add-group" class="btn btn-primary">
                     保存
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal-transfer-cus" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title">
+                    转让
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped" id="table-transfer-cus">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    关闭
                 </button>
             </div>
         </div>

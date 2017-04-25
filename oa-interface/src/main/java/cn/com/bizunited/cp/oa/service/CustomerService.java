@@ -5,6 +5,8 @@ import cn.com.bizunited.cp.common.web.pagination.Pageable;
 import cn.com.bizunited.cp.oa.domain.base.Admin;
 import cn.com.bizunited.cp.oa.domain.base.Customer;
 
+import java.util.List;
+
 /**
  * @Description:
  * @author: Paul Chan
@@ -17,4 +19,6 @@ public interface CustomerService extends BaseService<Customer> {
     void saveCus(Customer customer, Admin admin);
 
     void updateCusGroup(Long customerId, Long cusGroupId);
+
+    void transfer(Admin admin, List<Long> cusIds);
 }

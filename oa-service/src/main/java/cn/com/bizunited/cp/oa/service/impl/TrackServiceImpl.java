@@ -43,6 +43,7 @@ public class TrackServiceImpl extends BaseServiceImpl<Track> implements TrackSer
         if(customer == null){
             throw new ServerException(AccessStatus.NOT_FIND_CUSTOMER);
         }
+        track.setUserId(admin.getId());
         track.setCusName(customer.getName());
         track.setCreateBy(admin.getUsername());
         insertEntity(track);
