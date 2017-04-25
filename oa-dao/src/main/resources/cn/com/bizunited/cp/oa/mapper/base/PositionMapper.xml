@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.bizunited.cp.oa.mapper.base.PositionMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.bizunited.cp.oa.domain.base.Position" >
+    <id column="POSITION_ID" property="positionId" jdbcType="INTEGER" />
+    <result column="POS_NAME" property="posName" jdbcType="VARCHAR" />
+    <result column="POS_CODE" property="posCode" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    POSITION_ID, POS_NAME, POS_CODE, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from position
+    where POSITION_ID = #{positionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from position
+    where POSITION_ID = #{positionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.bizunited.cp.oa.domain.base.Position" >
+    <selectKey resultType="java.lang.Integer" keyProperty="positionId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into position (POS_NAME, POS_CODE, CREATE_DATE
+      )
+    values (#{posName,jdbcType=VARCHAR}, #{posCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.bizunited.cp.oa.domain.base.Position" >
+    <selectKey resultType="java.lang.Integer" keyProperty="positionId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into position
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="posName != null" >
+        POS_NAME,
+      </if>
+      <if test="posCode != null" >
+        POS_CODE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="posName != null" >
+        #{posName,jdbcType=VARCHAR},
+      </if>
+      <if test="posCode != null" >
+        #{posCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.bizunited.cp.oa.domain.base.Position" >
+    update position
+    <set >
+      <if test="posName != null" >
+        POS_NAME = #{posName,jdbcType=VARCHAR},
+      </if>
+      <if test="posCode != null" >
+        POS_CODE = #{posCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where POSITION_ID = #{positionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.bizunited.cp.oa.domain.base.Position" >
+    update position
+    set POS_NAME = #{posName,jdbcType=VARCHAR},
+      POS_CODE = #{posCode,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where POSITION_ID = #{positionId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.bizunited.cp.oa.mapper.base.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.bizunited.cp.oa.domain.base.Department" >
+    <id column="DEP_ID" property="depId" jdbcType="INTEGER" />
+    <result column="DEP_NO" property="depNo" jdbcType="VARCHAR" />
+    <result column="DEP_NAME" property="depName" jdbcType="VARCHAR" />
+    <result column="DEP_STATUS" property="depStatus" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="LELVE" property="lelve" jdbcType="INTEGER" />
+    <result column="PARENT_NO" property="parentNo" jdbcType="VARCHAR" />
+    <result column="TREE_PATH" property="treePath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DEP_ID, DEP_NO, DEP_NAME, DEP_STATUS, CREATE_TIME, LELVE, PARENT_NO, TREE_PATH
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from department
+    where DEP_ID = #{depId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from department
+    where DEP_ID = #{depId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.bizunited.cp.oa.domain.base.Department" >
+    <selectKey resultType="java.lang.Integer" keyProperty="depId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into department (DEP_NO, DEP_NAME, DEP_STATUS, 
+      CREATE_TIME, LELVE, PARENT_NO, 
+      TREE_PATH)
+    values (#{depNo,jdbcType=VARCHAR}, #{depName,jdbcType=VARCHAR}, #{depStatus,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lelve,jdbcType=INTEGER}, #{parentNo,jdbcType=VARCHAR}, 
+      #{treePath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.bizunited.cp.oa.domain.base.Department" >
+    <selectKey resultType="java.lang.Integer" keyProperty="depId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="depNo != null" >
+        DEP_NO,
+      </if>
+      <if test="depName != null" >
+        DEP_NAME,
+      </if>
+      <if test="depStatus != null" >
+        DEP_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="lelve != null" >
+        LELVE,
+      </if>
+      <if test="parentNo != null" >
+        PARENT_NO,
+      </if>
+      <if test="treePath != null" >
+        TREE_PATH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="depNo != null" >
+        #{depNo,jdbcType=VARCHAR},
+      </if>
+      <if test="depName != null" >
+        #{depName,jdbcType=VARCHAR},
+      </if>
+      <if test="depStatus != null" >
+        #{depStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lelve != null" >
+        #{lelve,jdbcType=INTEGER},
+      </if>
+      <if test="parentNo != null" >
+        #{parentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="treePath != null" >
+        #{treePath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.bizunited.cp.oa.domain.base.Department" >
+    update department
+    <set >
+      <if test="depNo != null" >
+        DEP_NO = #{depNo,jdbcType=VARCHAR},
+      </if>
+      <if test="depName != null" >
+        DEP_NAME = #{depName,jdbcType=VARCHAR},
+      </if>
+      <if test="depStatus != null" >
+        DEP_STATUS = #{depStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lelve != null" >
+        LELVE = #{lelve,jdbcType=INTEGER},
+      </if>
+      <if test="parentNo != null" >
+        PARENT_NO = #{parentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="treePath != null" >
+        TREE_PATH = #{treePath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DEP_ID = #{depId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.bizunited.cp.oa.domain.base.Department" >
+    update department
+    set DEP_NO = #{depNo,jdbcType=VARCHAR},
+      DEP_NAME = #{depName,jdbcType=VARCHAR},
+      DEP_STATUS = #{depStatus,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      LELVE = #{lelve,jdbcType=INTEGER},
+      PARENT_NO = #{parentNo,jdbcType=VARCHAR},
+      TREE_PATH = #{treePath,jdbcType=VARCHAR}
+    where DEP_ID = #{depId,jdbcType=INTEGER}
+  </update>
+</mapper>

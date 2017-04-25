@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.bizunited.cp.oa.mapper.PositionBeanMapper">
+    <resultMap id="BaseResultMap" type="cn.com.bizunited.cp.oa.domain.base.Position" >
+        <id column="POSITION_ID" property="positionId" jdbcType="INTEGER" />
+        <result column="POS_NAME" property="posName" jdbcType="VARCHAR" />
+        <result column="POS_CODE" property="posCode" jdbcType="VARCHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        POSITION_ID, POS_NAME, POS_CODE, CREATE_DATE
+    </sql>
+    <select id="findPositionByUserId" resultMap="BaseResultMap">
+        SELECT p.* FROM position p
+        JOIN tb_admin_pos_module ap ON p.POSITION_ID=ap.POS_ID
+        WHERE ap.ADMIN_ID=#{userId,jdbcType=INTEGER}
+    </select>
+</mapper>

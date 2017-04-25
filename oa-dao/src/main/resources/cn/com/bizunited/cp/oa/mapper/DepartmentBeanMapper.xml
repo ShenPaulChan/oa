@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.bizunited.cp.oa.mapper.DepartmentBeanMapper">
+    <resultMap id="BaseResultMap" type="cn.com.bizunited.cp.oa.domain.base.Department" >
+        <id column="DEP_ID" property="depId" jdbcType="INTEGER" />
+        <result column="DEP_NO" property="depNo" jdbcType="VARCHAR" />
+        <result column="DEP_NAME" property="depName" jdbcType="VARCHAR" />
+        <result column="DEP_STATUS" property="depStatus" jdbcType="INTEGER" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="LELVE" property="lelve" jdbcType="INTEGER" />
+        <result column="PARENT_NO" property="parentNo" jdbcType="VARCHAR" />
+        <result column="TREE_PATH" property="treePath" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        DEP_ID, DEP_NO, DEP_NAME, DEP_STATUS, CREATE_TIME, LELVE, PARENT_NO, TREE_PATH
+    </sql>
+    <select id="findDepartmentsByParentDepNo" resultMap="BaseResultMap">
+      SELECT <include refid="Base_Column_List"/>
+        FROM department
+        <where>
+            TREE_PATH LIKE CONCAT('%',#{depNo},'%')
+        </where>
+    </select>
+</mapper>
