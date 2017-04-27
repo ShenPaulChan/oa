@@ -8,6 +8,11 @@
                 <menus id="1001001" order="1" pId="1001" name="客户列表" url="../oa/customer/list/view" permission="oa:customer" />
             </menusArray>
         </menus>
+        <menus id="1002" order="3" pId="0" name="统计报表" imgsrc="../resources/image/shangpingguanli.png">
+            <menusArray>
+                <menus id="1002001" order="1" pId="1002" name="量化报表" url="../oa/track/count/list/view" permission="oa:track" />
+            </menusArray>
+        </menus>
 	</app-menus>
     <!-- 对应菜单中 页面的权限 -->
    <app-permissions>
@@ -15,5 +20,8 @@
         <permissions pId="1001001">
 	        <permission id="1001001001" name="查询" order="1" permission="query" />
         </permissions>
+       <permissions pId="1002001">
+           <permission id="1002001001" name="查询" order="1" permission="query" />
+       </permissions>
      </app-permissions>
 </app-menus-config>

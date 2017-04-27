@@ -3,6 +3,7 @@ package cn.com.bizunited.cp.oa.service.impl;
 import cn.com.bizunited.cp.common.web.pagination.Page;
 import cn.com.bizunited.cp.common.web.pagination.Pageable;
 import cn.com.bizunited.cp.oa.commons.AccessStatus;
+import cn.com.bizunited.cp.oa.domain.TrackCountVO;
 import cn.com.bizunited.cp.oa.domain.base.Admin;
 import cn.com.bizunited.cp.oa.domain.base.Customer;
 import cn.com.bizunited.cp.oa.domain.base.Track;
@@ -54,6 +55,14 @@ public class TrackServiceImpl extends BaseServiceImpl<Track> implements TrackSer
         Page<Track> page = new Page<Track>(pageable);
         List<Track> tracks = trackBeanMapper.getPage(page);
         page.setRows(tracks);
+        return page;
+    }
+
+    @Override
+    public Page getCountTrackPage(Pageable pageable) {
+        Page page = new Page(pageable);
+        List<TrackCountVO> trackCountVOS = trackBeanMapper.getTrackCountPage(page);
+        page.setRows(trackCountVOS);
         return page;
     }
 }

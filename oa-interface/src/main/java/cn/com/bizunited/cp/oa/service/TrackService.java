@@ -15,4 +15,6 @@ public interface TrackService extends BaseService<Track> {
     void addTrack(Track track, Admin admin);
 
     Page<Track> getPage(Pageable pageable);
+
+    Page getCountTrackPage(Pageable pageable);
 }

@@ -457,4 +457,20 @@ public class DateUtils {
     }
 
 
+    public static RangeDate getRangeDate(String rangeDateStr) {
+        RangeDate rangeDate = new RangeDate();
+        if(StringUtil.isNotEmpty(rangeDateStr)){
+            try {
+                String[] dateStrs = rangeDateStr.split(" - ");
+                rangeDate.setStartDate(getDateByFormat(dateStrs[0], DEFAULT_DAY_PATTERN));
+                rangeDate.setEndDate(getDateByFormat(dateStrs[1], DEFAULT_DAY_PATTERN));
+                rangeDate.getEndDate().setTime(rangeDate.getEndDate().getTime()+ONE_DAY_MILLISECONDS);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return rangeDate;
+    }
+
+
 }

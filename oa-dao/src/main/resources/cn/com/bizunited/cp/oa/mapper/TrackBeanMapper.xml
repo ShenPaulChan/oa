@@ -14,6 +14,15 @@
     <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
     <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
   </resultMap>
+  <resultMap id="TrackCountVOMap" type="cn.com.bizunited.cp.oa.domain.TrackCountVO">
+    <result column="DATE" jdbcType="VARCHAR" property="date" />
+    <result column="TRACK_COUNT" jdbcType="INTEGER" property="trackCount" />
+    <result column="NET_TRACK_COUNT" jdbcType="INTEGER" property="netTrackCount" />
+    <result column="TEL_TRACK_COUNT" jdbcType="INTEGER" property="telTrackCount" />
+    <result column="NET_TEACH_TRACK_COUNT" jdbcType="INTEGER" property="netTeachTrackCount" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+  </resultMap>
   <sql id="Base_Column_List">
     TRACK_ID, CUS_ID, CUS_NAME, CUS_TYPE, NEXT_TIME, STEP, TRACK_TYPE, CONTENT, USER_ID,
     CREATE_TIME, CREATE_BY
@@ -26,4 +35,48 @@
     </where>
     ORDER BY CREATE_TIME DESC
   </select>
+    <select id="getTrackCountPage" resultMap="TrackCountVOMap" parameterType="cn.com.bizunited.cp.common.web.pagination.Page">
+      SELECT DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d') AS DATE,COUNT(*) AS TRACK_COUNT,net_track.NET_TRACK_COUNT,tel_track.TEL_TRACK_COUNT,
+        net_teach_track.NET_TEACH_TRACK_COUNT ,tt.USER_ID, ta.username AS USERNAME
+      FROM tb_track tt
+      JOIN tb_admin ta ON tt.USER_ID=ta.id
+      LEFT JOIN (SELECT DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d') AS DATE,COUNT(*) AS TEL_TRACK_COUNT, tt.USER_ID AS USER_ID
+                              FROM tb_track tt
+                              JOIN tb_admin ta ON tt.USER_ID=ta.id
+                              WHERE tt.TRACK_TYPE=1
+                              GROUP BY DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d'),tt.USER_ID) tel_track
+      ON tel_track.USER_ID = tt.USER_ID AND DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d')=tel_track.DATE
+      LEFT JOIN (SELECT DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d') AS DATE,COUNT(*) AS NET_TRACK_COUNT, tt.USER_ID AS USER_ID
+                              FROM tb_track tt
+                              JOIN tb_admin ta ON tt.USER_ID=ta.id
+                              WHERE tt.TRACK_TYPE=2
+                              GROUP BY DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d'),tt.USER_ID) net_track
+      ON net_track.USER_ID = tt.USER_ID AND DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d')=net_track.DATE
+      LEFT JOIN (SELECT DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d') AS DATE,COUNT(*) AS NET_TEACH_TRACK_COUNT, tt.USER_ID AS USER_ID
+                              FROM tb_track tt
+                              JOIN tb_admin ta ON tt.USER_ID=ta.id
+                              WHERE tt.TRACK_TYPE=3
+                              GROUP BY DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d'),tt.USER_ID) net_teach_track
+      ON net_teach_track.USER_ID = tt.USER_ID AND DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d')=net_teach_track.DATE
+      where
+      <choose>
+        <when test="advancedQueryCondition.isLeader">
+          ta.deptid IN <foreach collection="advancedQueryCondition.depts" item="dept" open="(" separator="," close=")">${dept.depId}</foreach>
+        </when>
+        <otherwise>
+          tt.USER_ID=#{advancedQueryCondition.userId}
+        </otherwise>
+      </choose>
+        <if test="searchCondition.value != null and searchCondition.value != ''">
+            AND ta.username LIKE CONCAT('%',#{searchCondition.value},'%')
+        </if>
+        <if test="advancedQueryCondition.rangeDate != null and advancedQueryCondition.rangeDate.startDate != null ">
+            AND tt.CREATE_TIME <![CDATA[>=]]> #{advancedQueryCondition.rangeDate.startDate}
+        </if>
+        <if test="advancedQueryCondition.rangeDate != null and advancedQueryCondition.rangeDate.endDate != null ">
+            AND tt.CREATE_TIME <![CDATA[<]]> #{advancedQueryCondition.rangeDate.endDate}
+        </if>
+      GROUP BY DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d'),tt.USER_ID
+      ORDER BY DATE DESC
+    </select>
 </mapper>
