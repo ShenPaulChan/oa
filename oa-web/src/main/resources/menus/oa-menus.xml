@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--119.23.17.31-->
-<app-menus-config appName="oa" appUrl="http://119.23.17.31/oa" isEnabledPermission = "true">
+<app-menus-config appName="oa" appUrl="http://localhost:8085/oa" isEnabledPermission = "true">
     <!-- 菜单  -->
 	<app-menus>
         <menus id="1001" order="3" pId="0" name="客户管理" imgsrc="../resources/image/tree6.png">

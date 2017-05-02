@@ -312,6 +312,7 @@ var Util = {
             processing: true, //打开数据加载时的等待效果
             serverSide: true,//打开后台分页
             ordering: true,
+            pageLength: 30,
             searching:true,
             search:true,
             isAdvancedSearch:{
@@ -352,9 +353,9 @@ var Util = {
                 {data: "wxName",orderable:false, title:'微信昵称'},
                 {data: "customerId",orderable:false, title:'操作', render:function(data, type, row, meta){
                     var html = '';
-                    html += '<button type="button" onclick="customer_list.editCus('+data+')" class="btn btn-primary btn-edit-cus">修改信息</button>';
-                    html += '<button type="button" onclick="customer_list.cusGroup('+data+')" class="btn btn-primary btn-edit-cus-group">自选</button>';
-                    html += '<button type="button" onclick="customer_list.list_track('+data+')" class="btn btn-primary btn-edit-cus-group">跟踪信息</button>';
+                    html += '<button type="button" onclick="customer_list.editCus('+data+')" class="btn btn-sm btn-primary btn-edit-cus">修改</button>';
+                    html += '<button type="button" onclick="customer_list.cusGroup('+data+')" class="btn btn-sm btn-primary btn-edit-cus-group">自选</button>';
+                    html += '<button type="button" onclick="customer_list.list_track('+data+')" class="btn btn-sm btn-primary btn-edit-cus-group">跟踪</button>';
                     return html;
                 }},
             ]
