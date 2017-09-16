@@ -44,12 +44,13 @@ public class TrackController extends BaseController {
     private PositionService positionService;
 
     @RequestMapping("/list/view")
-    public ModelAndView trackListView(Long customerId){
+    public ModelAndView trackListView(Long customerId, Integer start){
         ModelAndView mav = new ModelAndView("track/list");
         Customer customer = customerService.selectEntityById(customerId);
         if(customer == null){
             throw new AjaxException(AccessStatus.NOT_FIND_CUSTOMER);
         }
+        mav.addObject("customer_page_start", start);
         mav.addObject("customer", customer);
         mav.addObject("customerJson", JsonUtils.toJson(customer));
         return mav;

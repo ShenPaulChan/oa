@@ -7,6 +7,7 @@ var track_list = {};
 $(function(){
     track_list.page = $('#track-table').page(Util.tableSetting());
     $('#btn-show-add-track').on('click', function(){
+        console.info(track_list.page.page.info());
         $('select[name=step]').val('');
         $('select[name=trackType]').val('');
         $('textarea[name=content]').val('');
@@ -36,7 +37,7 @@ track_list.add_track = function(){
     track_service.add_track(formData, function(json){
         if(json.code == 1000){
             $('#modal-add-track').modal('hide');
-            track_list.page.ajax.reload();
+            track_list.page.ajax.reload(null, false);
         }else{
             dialog.alert('保存失败！')
         }
@@ -90,6 +91,7 @@ var Util = {
                 type:"post",
                 "data": function (data) {
                     data.cusId = customer_info.customerId;
+                    return data;
                 }
             },
             "columns": [

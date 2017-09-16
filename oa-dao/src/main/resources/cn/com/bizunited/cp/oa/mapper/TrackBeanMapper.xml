@@ -36,7 +36,7 @@
     ORDER BY CREATE_TIME DESC
   </select>
     <select id="getTrackCountPage" resultMap="TrackCountVOMap" parameterType="cn.com.bizunited.cp.common.web.pagination.Page">
-      SELECT DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d') AS DATE,COUNT(*) AS TRACK_COUNT,net_track.NET_TRACK_COUNT,tel_track.TEL_TRACK_COUNT,
+      SELECT * FROM (SELECT DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d') AS DATE,COUNT(*) AS TRACK_COUNT,net_track.NET_TRACK_COUNT,tel_track.TEL_TRACK_COUNT,
         net_teach_track.NET_TEACH_TRACK_COUNT ,tt.USER_ID, ta.username AS USERNAME
       FROM tb_track tt
       JOIN tb_admin ta ON tt.USER_ID=ta.id
@@ -77,6 +77,6 @@
             AND tt.CREATE_TIME <![CDATA[<]]> #{advancedQueryCondition.rangeDate.endDate}
         </if>
       GROUP BY DATE_FORMAT(tt.CREATE_TIME, '%Y-%m-%d'),tt.USER_ID
-      ORDER BY DATE DESC
+      ORDER BY DATE DESC) temp
     </select>
 </mapper>

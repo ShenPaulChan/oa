@@ -22,6 +22,8 @@ public class AccessStatus {
     public static int NOT_FIND_CUSTOMER = 1006;
     @Description(value = "自选分类不存在", key = 1007)
     public static int NOT_FIND_GROUP = 1007;
+    @Description(value = "手机号码已录入", key = 1008)
+    public static int MOBILE_EXIST = 1008;
 
 
 

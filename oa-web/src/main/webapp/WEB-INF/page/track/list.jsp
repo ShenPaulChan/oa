@@ -14,6 +14,7 @@
 <script src="${base}/js/track/track-service.js"></script>
 <script type="application/javascript">
     var customer_info = ${customerJson};
+    var customer_page_start = ${customer_page_start};
 </script>
 <style>
     .control-label{

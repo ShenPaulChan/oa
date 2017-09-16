@@ -51,6 +51,10 @@ public class CustomerController extends BaseController {
     public AjaxJson saveCus(Customer customer){
         Integer userId = getCurrentUserId();
         Admin admin = adminService.selectEntityById(userId);
+        boolean result = customerService.checkMobile(customer.getCustomerId(), customer.getMobile());
+        if(!result){
+            throw new AjaxException(AccessStatus.MOBILE_EXIST);
+        }
         customerService.saveCus(customer, admin);
         AjaxJson json = new AjaxJson(AccessStatus.SERVER_SUCCESS);
         return json;
@@ -91,7 +95,7 @@ public class CustomerController extends BaseController {
     @RequestMapping(value = "/groups/delete", method = RequestMethod.POST)
     public AjaxJson deleteGroup(Long cusGroupId){
         checkParameters(cusGroupId);
-        cusGroupService.deleteEntityById(cusGroupId);
+        cusGroupService.deleteCusGroup(cusGroupId);
         AjaxJson json = new AjaxJson(AccessStatus.SERVER_SUCCESS);
         return json;
     }

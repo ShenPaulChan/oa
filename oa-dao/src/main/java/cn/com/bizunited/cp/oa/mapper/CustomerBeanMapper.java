@@ -2,6 +2,7 @@ package cn.com.bizunited.cp.oa.mapper;
 
 import cn.com.bizunited.cp.common.web.pagination.Page;
 import cn.com.bizunited.cp.oa.domain.base.Customer;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +15,7 @@ public interface CustomerBeanMapper {
 
     List<Customer> findPage(Page page);
 
+    Long checkMobile(@Param("customerId") Long customerId, @Param("mobile") String mobile);
+
+    List<Customer> findByGroupId(@Param("cusGroupId") Long cusGroupId);
 }

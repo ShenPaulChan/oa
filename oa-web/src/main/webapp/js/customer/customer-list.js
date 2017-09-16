@@ -90,7 +90,7 @@ $(function(){
 });
 
 customer_list.list_track = function(customerId){
-    location.href = base + '/oa/track/list/view?customerId='+customerId;
+    location.href = base + '/oa/track/list/view?customerId='+customerId+'&start='+customer_list.page_start;
 }
 
 customer_list.get_checked_cusIds = function(){
@@ -124,7 +124,7 @@ customer_list.save_cus_group = function(){
     customer_service.save_cus_group(formData, function(json){
         if(json.code == 1000){
             $('#modal-cus-group').modal('hide');
-            customer_list.page.ajax.reload();
+            customer_list.page.ajax.reload(null, false);
         }else{
             dialog.alert('保存失败');
         }
@@ -135,6 +135,7 @@ customer_list.del_group = function(cusGroupId){
     customer_service.del_group(cusGroupId, function(json){
         if(json.code == 1000){
             $('#form-cus-group').find('select[name=cusGroupId]').find('option[value='+cusGroupId+']').remove();
+            customer_list.page.ajax.reload(null, false);
         }else{
             dialog.alert('删除失败');
         }
@@ -231,6 +232,8 @@ customer_list.save_cus = function(){
                 $('#modal-add-cus').modal('hide');
                 customer_list.page.ajax.reload();
             })
+        }else if(json.code == 1008){
+            dialog.alert('该手机号码已录入！');
         }
     });
 }
@@ -312,7 +315,7 @@ var Util = {
             processing: true, //打开数据加载时的等待效果
             serverSide: true,//打开后台分页
             ordering: true,
-            pageLength: 30,
+            pageLength: 10,
             searching:true,
             search:true,
             isAdvancedSearch:{
@@ -323,7 +326,8 @@ var Util = {
                 "url": base + "/oa/customer/page",
                 type:"post",
                 "data": function (data) {
-                    data.listType = $('select[name=cus-source]').val()
+                    data.listType = $('select[name=cus-source]').val();
+                    customer_list.page_start = data.start;
                     return data;
                 }
             },

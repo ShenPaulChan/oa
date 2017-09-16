@@ -96,6 +96,10 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer> implements Cu
             customer.setGroupId(group.getCusGroupId());
             customer.setGroupName(group.getName());
             updateEntityKeySelective(customer);
+        }else{
+            customer.setGroupId(null);
+            customer.setGroupName("");
+            updateEntity(customer);
         }
     }
 
@@ -107,6 +111,28 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer> implements Cu
             if(customer != null){
                 customer.setUserId(admin.getId());
                 updateEntityKeySelective(customer);
+            }
+        }
+    }
+
+    @Override
+    public boolean checkMobile(Long customerId, String mobile) {
+        Long count = customerBeanMapper.checkMobile(customerId, mobile);
+        if(count != null && count > 0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public void removeCusOfGroup(CusGroup cusGroup) {
+        List<Customer> customers = customerBeanMapper.findByGroupId(cusGroup.getCusGroupId());
+        if(customers != null){
+            for (Customer customer : customers) {
+                customer.setGroupId(null);
+                customer.setGroupName("");
+                updateEntity(customer);
             }
         }
     }

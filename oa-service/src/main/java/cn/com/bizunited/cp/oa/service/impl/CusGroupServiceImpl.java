@@ -6,6 +6,7 @@ import cn.com.bizunited.cp.oa.mapper.CusGroupBeanMapper;
 import cn.com.bizunited.cp.oa.mapper.base.BaseMapper;
 import cn.com.bizunited.cp.oa.mapper.base.CusGroupMapper;
 import cn.com.bizunited.cp.oa.service.CusGroupService;
+import cn.com.bizunited.cp.oa.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ public class CusGroupServiceImpl extends BaseServiceImpl<CusGroup> implements Cu
 
     @Autowired
     private CusGroupBeanMapper cusGroupBeanMapper;
+    @Autowired
+    private CustomerService customerService;
 
     @Autowired
     public void setBaseMapper(CusGroupMapper baseMapper) {
@@ -42,6 +45,17 @@ public class CusGroupServiceImpl extends BaseServiceImpl<CusGroup> implements Cu
         group.setName(groupName);
         insertEntity(group);
         return group;
+    }
+
+    @Override
+    @Transactional
+    public void deleteCusGroup(Long cusGroupId) {
+        CusGroup cusGroup = selectEntityById(cusGroupId);
+        if(cusGroup == null){
+            return;
+        }
+        deleteEntityById(cusGroupId);
+        customerService.removeCusOfGroup(cusGroup);
     }
 
 

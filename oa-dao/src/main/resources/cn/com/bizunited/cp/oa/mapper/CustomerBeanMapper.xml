@@ -81,5 +81,20 @@
       </otherwise>
     </choose>
   </select>
+    <select id="checkMobile" resultType="java.lang.Long">
+      SELECT COUNT(1) FROM tb_customer tc
+      <where>
+        tc.MOBILE = #{mobile}
+        <if test="customerId != null and customerId != 0">
+          AND tc.CUSTOMER_ID != #{customerId}
+        </if>
+      </where>
+    </select>
+  <select id="findByGroupId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM tb_customer tc
+    <where>
+      tc.GROUP_ID=#{cusGroupId}
+    </where>
+  </select>
 
 </mapper>
