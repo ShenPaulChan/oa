@@ -90,7 +90,8 @@ $(function(){
 });
 
 customer_list.list_track = function(customerId){
-    location.href = base + '/oa/track/list/view?customerId='+customerId+'&start='+customer_list.page_start;
+	var pageInfo = customer_list.page.page.info();
+    location.href = base + '/oa/track/list/view?customerId='+customerId+'&start='+pageInfo.start;
 }
 
 customer_list.get_checked_cusIds = function(){
@@ -224,7 +225,6 @@ customer_list.init_add_form = function(cus){
 
 customer_list.save_cus = function(){
     var formData = $('#form-add-cus').serialize();
-    console.info(formData);
     customer_service.save_cus(formData, function(json){
         if(json.code == 1000){
             dialog.alert('保存成功', function(){
@@ -233,7 +233,7 @@ customer_list.save_cus = function(){
                 customer_list.page.ajax.reload();
             })
         }else if(json.code == 1008){
-            dialog.alert('该手机号码已录入！');
+            dialog.alert(json.message);
         }
     });
 }
@@ -315,7 +315,8 @@ var Util = {
             processing: true, //打开数据加载时的等待效果
             serverSide: true,//打开后台分页
             ordering: true,
-            pageLength: 10,
+            pageLength: 30,
+	        displayStart:page_start,
             searching:true,
             search:true,
             isAdvancedSearch:{

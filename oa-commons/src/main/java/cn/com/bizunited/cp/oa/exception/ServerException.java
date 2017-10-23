@@ -44,7 +44,6 @@ public class ServerException extends RuntimeException {
 	 * @date: 2017年1月19日 下午8:23:04
 	 */
 	public int getHttpStatus() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.httpStatus;
 	}
 }

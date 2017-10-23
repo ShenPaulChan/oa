@@ -30,6 +30,11 @@ $(function(){
         autoclose: true,
         language : 'zh-CN'
     });
+
+    $('#btn-back-cus-list').click(function(){
+        location.href = base + '/oa/customer/list/view?start='+customer_page_start;
+    })
+
 })
 
 track_list.add_track = function(){

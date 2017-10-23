@@ -90,6 +90,14 @@
         </if>
       </where>
     </select>
+  <select id="findAdminNameByMobile" resultType="java.lang.String">
+    SELECT ta.username FROM tb_customer tc
+    JOIN tb_admin ta ON tc.USER_ID=ta.id
+    <where>
+      tc.MOBILE = #{mobile}
+    </where>
+    LIMIT 0,1
+  </select>
   <select id="findByGroupId" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM tb_customer tc
     <where>

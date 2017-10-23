@@ -18,4 +18,7 @@ public interface CustomerBeanMapper {
     Long checkMobile(@Param("customerId") Long customerId, @Param("mobile") String mobile);
 
     List<Customer> findByGroupId(@Param("cusGroupId") Long cusGroupId);
+
+    String findAdminNameByMobile(@Param("mobile") String mobile);
+
 }

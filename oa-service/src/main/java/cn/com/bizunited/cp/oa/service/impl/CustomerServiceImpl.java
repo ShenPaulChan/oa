@@ -136,4 +136,9 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer> implements Cu
             }
         }
     }
+
+    @Override
+    public String getAdminNameByMobile(String mobile) {
+        return customerBeanMapper.findAdminNameByMobile(mobile);
+    }
 }

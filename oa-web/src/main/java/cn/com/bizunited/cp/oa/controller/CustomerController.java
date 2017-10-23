@@ -7,6 +7,7 @@ import cn.com.bizunited.cp.oa.commons.enums.*;
 import cn.com.bizunited.cp.oa.domain.base.*;
 import cn.com.bizunited.cp.oa.domain.base.Position;
 import cn.com.bizunited.cp.oa.exception.AjaxException;
+import cn.com.bizunited.cp.oa.exception.ServerException;
 import cn.com.bizunited.cp.oa.service.*;
 import cn.com.bizunited.cp.oa.vo.AjaxJson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,10 @@ public class CustomerController extends BaseController {
     public AjaxJson saveCus(Customer customer){
         Integer userId = getCurrentUserId();
         Admin admin = adminService.selectEntityById(userId);
-        boolean result = customerService.checkMobile(customer.getCustomerId(), customer.getMobile());
-        if(!result){
-            throw new AjaxException(AccessStatus.MOBILE_EXIST);
+        boolean check = customerService.checkMobile(customer.getCustomerId(), customer.getMobile());
+        if(!check){
+            String adminName = customerService.getAdminNameByMobile(customer.getMobile());
+            throw new ServerException(AccessStatus.MOBILE_EXIST, "该客户已被[" + adminName + "]维护！");
         }
         customerService.saveCus(customer, admin);
         AjaxJson json = new AjaxJson(AccessStatus.SERVER_SUCCESS);
@@ -123,11 +125,12 @@ public class CustomerController extends BaseController {
     }
 
     @RequestMapping(value = "/list/view", method = RequestMethod.GET)
-    public ModelAndView customerListView(){
+    public ModelAndView customerListView(@RequestParam(defaultValue = "0") Integer start){
         Integer userId = getCurrentUserId();
         ModelAndView mav = new ModelAndView("costomer/list");
         List<City> cities = cityService.listCityByPid(0);
         List<CusGroup> cusGroups = cusGroupService.listUserCusGroups(userId);
+        mav.addObject("start", start);
         mav.addObject("cities", cities);
         mav.addObject("cusGroups", cusGroups);
         return mav;

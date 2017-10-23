@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CustomerService extends BaseService<Customer> {
 
-    public Page<Customer> getPage(Pageable pageable);
+    Page<Customer> getPage(Pageable pageable);
 
     void saveCus(Customer customer, Admin admin);
 
@@ -26,4 +26,6 @@ public interface CustomerService extends BaseService<Customer> {
     boolean checkMobile(Long customerId, String mobile);
 
     void removeCusOfGroup(CusGroup cusGroup);
+
+	String getAdminNameByMobile(String mobile);
 }

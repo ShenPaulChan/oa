@@ -8,8 +8,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ include file="../base.jsp" %>
-<script src="${base}/js/customer/customer-list.js"></script>
+<script type="application/javascript">
+	var page_start = ${start};
+</script>
 <script src="${base}/js/customer/customer.js"></script>
+<script src="${base}/js/customer/customer-list.js"></script>
 <script src="${base}/js/customer/customer-service.js"></script>
 <script src="${base}/js/city/city-service.js"></script>
 <style>

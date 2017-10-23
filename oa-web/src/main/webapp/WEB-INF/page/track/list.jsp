@@ -8,8 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ include file="../base.jsp" %>
-<script src="${base}/js/track/track-list.js"></script>
 <script src="${base}/js/track/track.js"></script>
+<script src="${base}/js/track/track-list.js"></script>
 <script src="${base}/js/customer/customer.js"></script>
 <script src="${base}/js/track/track-service.js"></script>
 <script type="application/javascript">
@@ -49,7 +49,7 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="button" onclick="history.back();" class="btn btn-primary">
+                            <button type="button" id="btn-back-cus-list" class="btn btn-primary">
                                 返回
                             </button>
                             <button type="button" id="btn-show-add-track" style="float: right" class="btn btn-primary">

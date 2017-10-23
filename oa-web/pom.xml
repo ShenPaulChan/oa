@@ -9,7 +9,7 @@
   </parent>
   <artifactId>oa-web</artifactId>
   <packaging>war</packaging>
-  <name>deshan-web Maven Webapp</name>
+  <name>oa-web Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
   
